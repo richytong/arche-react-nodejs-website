@@ -49,7 +49,7 @@ The HTTP handler for serving static files and HTML pages.
 Sometimes the request errors out between the main server and the HTML server. `fetch2` handles these errors with retries.
 
 ### [PageHtml.js](/PageHtml.js)
-Returns the HTML for all pages.
+Returns the HTML for all pages. Contains all client-side dependencies.
 
 `PageHtml` options:
   * `url` - the canonical `url` of the page.
