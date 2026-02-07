@@ -48,10 +48,10 @@ The HTTP handler for serving static files and HTML pages.
 ### [fetch2](/fetch2.js)
 Sometimes the request errors out between the main server and the HTML server. `fetch2` handles these errors with retries.
 
-### [PageHTML.js](/PageHTML.js)
+### [PageHtml.js](/PageHtml.js)
 Returns the HTML for all pages.
 
-`PageHTML` options:
+`PageHtml` options:
   * `url` - the canonical `url` of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
 
