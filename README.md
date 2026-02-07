@@ -15,7 +15,7 @@ arche-react-nodejs-website/
         index.css
         index.html
     serve
-    serve-dev
+    serve-local.sh
     StaticCache.js
     ServePage.js
     fetch2.js
@@ -33,7 +33,7 @@ Home of the client React application, with the application root at `Root.js`.
   * `htmlServerPort` - the port that the Node.js HTML server will listen on.
   * `htmlServerNoCache` - whether to bypass the import cache in the HTML server. Should be true for development.
 
-### [serve-dev](/serve-dev)
+### [serve-local.sh](/serve-local.sh)
 Script that runs the server for development.
 
 ### [StaticCache.js](/StaticCache.js)
@@ -55,27 +55,42 @@ Returns the HTML for all pages.
   * `url` - the canonical `url` of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
 
-## Installation
-Install dependencies.
-```sh
+## Run it locally
+
+1. Fork the repo
+
+![github-fork-button](https://rubico.land/assets/github-fork-button.jpg)
+
+2. Clone your forked version
+
+```
+# ssh
+git clone git@github.com:your-github-user/arche-static-website.git
+
+# https
+git clone https://github.com/your-github-user/arche-static-website.git
+```
+
+3. Install dependencies
+
+```
 npm i
 ```
 
-Install dependencies for the HTML server.
+4. Install dependencies for the HTML server
 ```sh
 cd html-server
 npm i
 ```
 
-## Run the development server
+5. Start the local web server
+
 ```sh
-./serve-dev
+./serve-local.sh
 ```
 
-## Run the production server
+## Run it in production
 ```sh
-NODE_ENV=production PORT=8080 HTML_SERVER_PORT=8081 ./serve
+NODE_ENV=production PORT=<server_port> HTML_SERVER_PORT=<html_server_port> ./serve
 ```
 
-## Adding Routes
-Currently to add a new route you have to add both a server route in `ServePage.js` and a client route in `public/react/Router.js`.
