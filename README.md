@@ -53,7 +53,7 @@ Sometimes the request errors out between the main server and the HTML server. `f
 Returns the HTML for all pages. Contains all client-side dependencies.
 
 `PageHtml` options:
-  * `url` - the canonical `url` of the page.
+  * `url` - the canonical URL of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
 
 ## Run it locally
