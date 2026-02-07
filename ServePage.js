@@ -8,6 +8,7 @@ const ServePage = function (options) {
   const {
     htmlServerPort,
     publicCache,
+    bypassPublicCache,
   } = options
 
   return async function servePage(request, response) {
@@ -16,7 +17,11 @@ const ServePage = function (options) {
 
 
     if (publicCache.has(path)) {
-      const { content, contentType } = publicCache.get(path)
+      const { content, contentType } =
+        bypassPublicCache
+        ? await publicCache.readFile(path)
+        : publicCache.get(path)
+
       response.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': contentType,

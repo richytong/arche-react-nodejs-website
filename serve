@@ -11,6 +11,7 @@ const serve = async function (options) {
     port,
     htmlServerPort,
     htmlServerNoCache,
+    bypassPublicCache,
   } = options
 
   {
@@ -48,6 +49,7 @@ const serve = async function (options) {
   const servePage = ServePage({
     htmlServerPort,
     publicCache,
+    bypassPublicCache,
   })
 
   const server = http.createServer(async (request, response) => {

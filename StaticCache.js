@@ -27,6 +27,16 @@ class StaticCache {
   get(...args) {
     return this.cache.get(...args)
   }
+
+  async readFile(url) {
+    const filename = `${this.directory}/${url}`.replace(/\/\//g, '/')
+    const ext = filename.split('.').slice(-1)[0]
+    const buffer = await fs.promises.readFile(filename)
+    return {
+      content: buffer,
+      contentType: ContentType(ext, buffer.toString('utf8')),
+    }
+  }
 }
 
 module.exports = StaticCache

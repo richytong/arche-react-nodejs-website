@@ -32,6 +32,7 @@ Home of the client React application, with the application root at `Root.js`.
   * `port` - the port that the main Node.js server will listen on.
   * `htmlServerPort` - the port that the Node.js HTML server will listen on.
   * `htmlServerNoCache` - whether to bypass the import cache in the HTML server. Should be true for development.
+  * `bypassPublicCache` - whether to bypass the public cache in main server. Should be true for development.
 
 ### [serve-local.sh](/serve-local.sh)
 Script that runs the server for development.
