@@ -1,0 +1,12 @@
+{
+  "name": "arche-react-nodejs-website",
+  "version": "0.0.0",
+  "description": "Quickstart project for a dynamic website using Arche, React, and Node.js",
+  "repository": {
+    "type": "git",
+    "url": "github.com/richytong/arche-react-presidium-website"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
