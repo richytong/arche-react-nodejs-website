@@ -14,6 +14,10 @@ arche-react-nodejs-website/
         global.js
         index.css
         index.html
+    html-server/
+        index.mjs
+        getRootHtml.mjs
+        logRootHtml.mjs
     serve
     serve-local.sh
     StaticCache.js
@@ -22,8 +26,23 @@ arche-react-nodejs-website/
     PageHtml.js
 ```
 
+### [public/](/public)
+The public directory. All files in this directory are made public to the internet. This directory is the root of the public website.
+
 ### [public/react/](/public/react)
 Home of the client React application, with the application root at `Root.js`.
+
+### [public/global.js](/public/global.js)
+JavaScript in this file is run at the top of all HTML `.html` files. Define global variables and functions in this file, e.g. `window.myVariable = 1`.
+
+### [public/index.css](/public/index.css)
+The default CSS file.
+
+### [public/index.html](/public/index.html)
+This page is served to requests for the home page `/`.
+
+### [html-server/](/html-server)
+The HTML server. `html-server` is a Node.js webserver using the ECMAScript module system that imports the client React application root `Root.js` to generate and serve HTML.
 
 ### [serve](/serve)
 `serve` is the entrypoint for the Node.js application. `serve` spins up the main webserver and the HTML server. The HTML server spins up a number of workers equal to the number of CPUs on the machine.
