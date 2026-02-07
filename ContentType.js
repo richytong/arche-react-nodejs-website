@@ -1,11 +1,3 @@
-/**
- * @name ContentType
- *
- * @synopsis
- * ```coffeescript [specscript]
- * ContentType(filepath string, content string) -> contentType string
- * ```
- */
 function ContentType(filepath, content) {
   const line1 = content.split('\n')
   if (line1.includes('<!DOCTYPE html>')) {

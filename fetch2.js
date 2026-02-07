@@ -1,14 +1,6 @@
 const fetch = require('node-fetch')
 const sleep = require('./sleep')
 
-/**
- * @name fetch2
- *
- * @synopsis
- * ```coffeescript [specscript]
- * fetch2(...args) -> Promise<Response>
- * ```
- */
 const fetch2 = async function (...args) {
   try {
     const response = await fetch(...args)
