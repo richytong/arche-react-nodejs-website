@@ -6,11 +6,9 @@ class StaticCache {
   constructor(options) {
     this.directory = options.directory
     this.cache = new Map()
-
-    this.ready = this._readyPromise()
   }
 
-  async _readyPromise() {
+  async load() {
     for await (const filename of walk(this.directory)) {
       const buffer = await fs.promises.readFile(filename)
       const url = filename.replace(this.directory, '/').replace(/\/\//g, '/')

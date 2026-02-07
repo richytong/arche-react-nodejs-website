@@ -43,6 +43,7 @@ const serve = async function (options) {
   const publicCache = new StaticCache({
     directory: `${__dirname}/public`,
   });
+  await publicCache.load()
 
   const servePage = ServePage({
     htmlServerPort,
