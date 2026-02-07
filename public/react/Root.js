@@ -11,7 +11,7 @@ const Root = ReactElement((props = {}) => {
     path: htmlServerPath,
   } = props
 
-  const path = htmlServerPath ?? clientPath
+  const path = window.ssr ? htmlServerPath : clientPath
 
   return Router({ path })
 })
