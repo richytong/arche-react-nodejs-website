@@ -4,7 +4,7 @@
   "description": "Quickstart project for a dynamic website using Arche, React, and Node.js",
   "repository": {
     "type": "git",
-    "url": "github.com/richytong/arche-react-presidium-website"
+    "url": "github.com/richytong/arche-react-nodejs-website"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
