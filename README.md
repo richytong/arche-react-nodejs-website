@@ -18,12 +18,12 @@ arche-react-nodejs-website/
         index.mjs
         getRootHtml.mjs
         logRootHtml.mjs
-    serve
-    serve-local.sh
+    run.sh
     StaticCache.js
     ServePage.js
     fetch2.js
     PageHtml.js
+    package.json
 ```
 
 ### [public/](/public)
@@ -44,17 +44,8 @@ This page is served to requests for the home page `/`.
 ### [html-server/](/html-server)
 The HTML server. `html-server` is a Node.js webserver using the ECMAScript module system that imports the client React application root `Root.js` to generate and serve HTML.
 
-### [serve](/serve)
-`serve` is the entrypoint for the Node.js application. `serve` spins up the main webserver and the HTML server. The HTML server spins up a number of workers equal to the number of CPUs on the machine.
-
-`serve` options:
-  * `port` - the port that the main Node.js server will listen on.
-  * `htmlServerPort` - the port that the Node.js HTML server will listen on.
-  * `htmlServerNoCache` - whether to bypass the import cache in the HTML server. Should be true for development.
-  * `bypassPublicCache` - whether to bypass the public cache in main server. Should be true for development.
-
-### [serve-local.sh](/serve-local.sh)
-Script that runs the server for development.
+### [run.sh](/run.sh)
+`run.sh` is the entrypoint for the Node.js application. `run.sh` spins up the main webserver and the HTML server. The HTML server spins up a number of workers equal to the number of CPUs on the machine.
 
 ### [StaticCache.js](/StaticCache.js)
 An in-memory cache of static files.
@@ -74,6 +65,38 @@ Returns the HTML for all pages. Contains all client-side dependencies.
 `PageHtml` options:
   * `url` - the canonical URL of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
+
+### [package.json](/package.json)
+The project configuration.
+
+`package.json` fields:
+  * `name` - the name of the project. Can only contain lowercase letters, numbers, and dashes (`-`).
+  * `version` - the version of the project.
+  * `dependencies` - external dependencies needed by the project.
+  * `env` - the environment-specific environment variables that will be provided to `run.sh`.
+
+`package.json` `env` structure:
+```
+{
+  production: {
+    VARIABLE_1: 'production-example',
+    VARIABLE_2: 'production-example',
+    ...
+  },
+  local: {
+    VARIABLE_1: 'local-example',
+    VARIABLE_2: 'local-example',
+    ...
+  },
+  ...
+}
+```
+
+`package.json` `env` variables:
+  * `PORT` - the port that the main Node.js server will listen on.
+  * `HTML_SERVER_PORT` - the port that the Node.js HTML server will listen on.
+  * `HTML_SERVER_NO_CACHE` - whether to bypass the import cache in the HTML server. Should be true for the local environment.
+  * `BYPASS_PUBLIC_CACHE` - whether to bypass the public cache in main server. Should be true for the local environment.
 
 ## Run it locally
 
@@ -106,11 +129,11 @@ npm i
 5. Start the local web server
 
 ```sh
-./serve-local.sh
+NODE_ENV=local ./run.sh
 ```
 
 ## Run it in production
 ```sh
-NODE_ENV=production PORT=<server_port> HTML_SERVER_PORT=<html_server_port> ./serve
+NODE_ENV=production ./run.sh
 ```
 

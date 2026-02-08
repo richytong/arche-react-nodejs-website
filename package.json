@@ -8,5 +8,19 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
+  },
+  "env": {
+    "local": {
+      "PORT": 4507,
+      "HTML_SERVER_PORT": 4508,
+      "HTML_SERVER_NO_CACHE": true,
+      "BYPASS_PUBLIC_CACHE": true
+    },
+    "production": {
+      "PORT": 8080,
+      "HTML_SERVER_PORT": 8081,
+      "HTML_SERVER_NO_CACHE": false,
+      "BYPASS_PUBLIC_CACHE": false
+    }
   }
 }

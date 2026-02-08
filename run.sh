@@ -1,26 +1,29 @@
 #!/usr/bin/env node
 
+if (process.env.NODE_ENV == null) {
+  throw new Error('NODE_ENV required')
+}
+
 require('rubico/global')
 const http = require('http')
 const { spawn } = require('child_process')
 const StaticCache = require('./StaticCache')
 const ServePage = require('./ServePage')
+const {
+  PORT,
+  HTML_SERVER_PORT,
+  HTML_SERVER_NO_CACHE,
+  BYPASS_PUBLIC_CACHE,
+} = require('./package.json').env[process.env.NODE_ENV]
 
-const serve = async function (options) {
-  const {
-    port,
-    htmlServerPort,
-    htmlServerNoCache,
-    bypassPublicCache,
-  } = options
-
+const run = async function (options) {
   {
     const cmd = spawn('node', [`${__dirname}/html-server/index.mjs`], {
       env: {
         ...process.env,
         NODE_ENV: process.env.NODE_ENV,
-        PORT: htmlServerPort,
-        NO_CACHE: htmlServerNoCache,
+        PORT: HTML_SERVER_PORT,
+        NO_CACHE: HTML_SERVER_NO_CACHE,
       },
     })
     cmd.stdout.pipe(process.stdout)
@@ -47,9 +50,9 @@ const serve = async function (options) {
   await publicCache.load()
 
   const servePage = ServePage({
-    htmlServerPort,
+    htmlServerPort: HTML_SERVER_PORT,
     publicCache,
-    bypassPublicCache,
+    bypassPublicCache: BYPASS_PUBLIC_CACHE,
   })
 
   const server = http.createServer(async (request, response) => {
@@ -66,16 +69,9 @@ const serve = async function (options) {
     })
   })
 
-  server.listen(port, () => {
-    console.log(`server listening on port ${port}`)
+  server.listen(PORT, () => {
+    console.log(`server listening on port ${PORT}`)
   })
 }
 
-if (process.argv[1] == __filename) {
-  serve({
-    port: process.env.PORT,
-    htmlServerPort: process.env.HTML_SERVER_PORT,
-  })
-}
-
-module.exports = serve
+run()
