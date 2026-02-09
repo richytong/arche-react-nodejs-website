@@ -15,8 +15,11 @@ const ServePage = function (options) {
     const url = new URL(request.url, 'http://throwaway');
     const path = decodeURIComponent(url.pathname);
 
-
-    if (publicCache.has(path)) {
+    if (
+      bypassPublicCache
+      ? await publicCache.isReadableFile(path)
+      : publicCache.has(path)
+    ) {
       const { content, contentType } =
         bypassPublicCache
         ? await publicCache.readFile(path)

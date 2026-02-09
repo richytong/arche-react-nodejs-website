@@ -28,6 +28,19 @@ class StaticCache {
     return this.cache.get(...args)
   }
 
+  async isReadableFile(url) {
+    const filename = `${this.directory}/${url}`.replace(/\/\//g, '/')
+    try {
+      const dirent = await fs.promises.stat(filename)
+      return !dirent.isDirectory()
+    } catch (error) {
+      if (error.code == 'ENOENT') {
+        return false
+      }
+      throw error
+    }
+  }
+
   async readFile(url) {
     const filename = `${this.directory}/${url}`.replace(/\/\//g, '/')
     const ext = filename.split('.').slice(-1)[0]
