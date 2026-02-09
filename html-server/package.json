@@ -4,7 +4,7 @@
   "description": "HTML server",
   "type": "module",
   "dependencies": {
-    "arche": "^1.0.0",
+    "arche": ">=1.0.1",
     "rubico": "^2.7.9"
   }
 }
