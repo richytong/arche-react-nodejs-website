@@ -4,7 +4,6 @@ if (process.env.NODE_ENV == null) {
   throw new Error('NODE_ENV required')
 }
 
-require('rubico/global')
 const http = require('http')
 const { spawn } = require('child_process')
 const StaticCache = require('./StaticCache')
