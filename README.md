@@ -65,6 +65,7 @@ Returns the HTML for all pages. Contains all client-side dependencies.
 `PageHtml` options:
   * `url` - the canonical URL of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
+  * `injectedData` - object of variables that will be available to the client as `window` properties`. For example a variable `MYVAR` declared in the `injectedData` option will be present in the client as `window.MYVAR`.
 
 ### [package.json](/package.json)
 The project configuration.
