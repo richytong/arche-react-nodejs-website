@@ -35,12 +35,17 @@ const ServePage = function (options) {
       const reactRootHTML =
         await fetch2(`http://0.0.0.0:${htmlServerPort}${path}`, {
           method: 'POST',
+          body: JSON.stringify({
+            global: {
+              myGlobalVariable: 'example',
+            },
+          }),
         }).then(res => res.text())
 
       const html = PageHtml({
         url: '/',
         reactRootHTML,
-        injectedData: {
+        global: {
           myGlobalVariable: 'example',
         },
       })

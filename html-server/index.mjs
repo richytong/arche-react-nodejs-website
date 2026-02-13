@@ -1,4 +1,5 @@
 import http from 'http'
+import ReadableText from './ReadableText.js'
 import getRootHtml from './getRootHtml.mjs'
 import { spawn } from 'child_process'
 import cluster from 'cluster'
@@ -11,6 +12,9 @@ const server = http.createServer(async (request, response) => {
   try {
     const url = new URL(`http://throwaway${request.url}`)
     const path = decodeURIComponent(url.pathname)
+    const text = await ReadableText(request)
+    const data = text ? JSON.parse(text) : {}
+    const { global = {} } = data
 
     const html =
       nocache
@@ -18,8 +22,9 @@ const server = http.createServer(async (request, response) => {
         let output = ''
         const cmd = spawn('node', [`${import.meta.dirname}/logRootHtml.mjs`], {
           stdio: ['pipe', 'pipe', process.stderr],
+          env: { ...process.env },
         })
-        cmd.stdin.write(JSON.stringify({ path }))
+        cmd.stdin.write(JSON.stringify({ global, path }))
         cmd.stdin.end()
         cmd.stdout.on('data', buf => {
           output += buf.toString('utf8')
@@ -28,7 +33,7 @@ const server = http.createServer(async (request, response) => {
           resolve(output)
         })
       })
-      : await getRootHtml({ path })
+      : await getRootHtml({ global, path })
 
     if (html == '') {
       throw new Error('bad html')

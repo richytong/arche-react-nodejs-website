@@ -6,6 +6,10 @@ const { pipe, set, get, filter, omit } = rubico
 
 globalThis.window = globalThis
 
+for (const name in process.env) {
+  window[name] = process.env[name]
+  globalThis[name] = process.env[name]
+}
 window.ssr = true
 
 window.Arche = Arche
@@ -162,6 +166,15 @@ await import('../public/global.js')
 const Root = await import('../public/react/Root.js').then(get('default'))
 
 export default function getRootHtml(data) {
-  const html = Root(data)
+  const { path, global } = data
+  for (const name in global) {
+    window[name] = global[name]
+    globalThis[name] = global[name]
+  }
+  const html = Root({ path })
+  for (const name in global) {
+    delete window[name]
+    delete globalThis[name]
+  }
   return html
 }

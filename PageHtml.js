@@ -4,18 +4,18 @@ const PageHtml = function (options) {
   const {
     url,
     reactRootHTML = '<div id="react-root"></div>',
-    injectedData,
+    global,
   } = options
 
-  const injectedDataEval = injectedData == null
+  const globalScript = global == null
     ? ''
-    : `<script>${WindowSetters(injectedData)}</script>`
+    : `<script>${WindowSetters(global)}</script>`
 
   return `
 <!DOCTYPE html>
 <html lang="en">
 
-${injectedDataEval}
+${globalScript}
 
 <head>
   <meta charset="UTF-8">

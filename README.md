@@ -42,7 +42,7 @@ The default CSS file.
 This page is served to requests for the home page `/`.
 
 ### [html-server/](/html-server)
-The HTML server. `html-server` is a Node.js webserver using the ECMAScript module system that imports the client React application root `Root.js` to generate and serve HTML.
+The HTML server. `html-server` is a Node.js webserver using the ECMAScript module system that imports the client React application root `Root.js` to generate and serve HTML. Requests to the HTML server should include in the request body the same `global` field used by `PageHTML`.
 
 ### [run.sh](/run.sh)
 `run.sh` is the entrypoint for the Node.js application. `run.sh` spins up the main webserver and the HTML server. The HTML server spins up a number of workers equal to the number of CPUs on the machine.
@@ -65,7 +65,7 @@ Returns the HTML for all pages. Contains all client-side dependencies.
 `PageHtml` options:
   * `url` - the canonical URL of the page.
   * `reactRootHTML` - the page-specific HTML received from the HTML server. Includes the `<div id="react-root">...</div>` tag and all children.
-  * `injectedData` - object of variables that will be available to the client as `window` properties`. For example a variable `MYVAR` declared in the `injectedData` option will be present in the client as `window.MYVAR`.
+  * `global` - object of variables that will be available to the client as `window` properties`. For example a variable `MYVAR` declared in the `global` option will be present in the client as `window.MYVAR`.
 
 ### [package.json](/package.json)
 The project configuration.
