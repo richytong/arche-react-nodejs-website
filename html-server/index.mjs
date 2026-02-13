@@ -11,7 +11,6 @@ const nocache = process.env.NO_CACHE == '1' || process.env.NO_CACHE == 'true'
 const server = http.createServer(async (request, response) => {
   try {
     const url = new URL(`http://throwaway${request.url}`)
-    const path = decodeURIComponent(url.pathname)
     const text = await ReadableText(request)
     const data = text ? JSON.parse(text) : {}
     const { global = {} } = data
@@ -24,7 +23,7 @@ const server = http.createServer(async (request, response) => {
           stdio: ['pipe', 'pipe', process.stderr],
           env: { ...process.env },
         })
-        cmd.stdin.write(JSON.stringify({ global, path }))
+        cmd.stdin.write(JSON.stringify({ global, url: request.url }))
         cmd.stdin.end()
         cmd.stdout.on('data', buf => {
           output += buf.toString('utf8')
@@ -33,7 +32,7 @@ const server = http.createServer(async (request, response) => {
           resolve(output)
         })
       })
-      : await getRootHtml({ global, path })
+      : await getRootHtml({ global, url: request.url })
 
     if (html == '') {
       throw new Error('bad html')

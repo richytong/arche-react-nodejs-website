@@ -8,7 +8,6 @@ globalThis.window = globalThis
 
 for (const name in process.env) {
   window[name] = process.env[name]
-  globalThis[name] = process.env[name]
 }
 window.ssr = true
 
@@ -130,10 +129,6 @@ const React = (function () {
 
 window.React = React
 
-window.location = {
-  pathname: '/not-found',
-}
-
 window.localStorage = {
   getItem() {},
   setItem() {},
@@ -166,12 +161,17 @@ await import('../public/global.js')
 const Root = await import('../public/react/Root.js').then(get('default'))
 
 export default function getRootHtml(data) {
-  const { path, global } = data
+  const { url, global } = data
+  const urlObject = new URL(`http://*${url}`)
+  window.location = {
+    pathname: urlObject.pathname,
+    search: urlObject.search,
+  }
   for (const name in global) {
     window[name] = global[name]
     globalThis[name] = global[name]
   }
-  const html = Root({ path })
+  const html = Root()
   for (const name in global) {
     delete window[name]
     delete globalThis[name]

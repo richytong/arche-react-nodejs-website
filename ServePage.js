@@ -33,7 +33,7 @@ const ServePage = function (options) {
     }
     else if (path == '/') {
       const reactRootHTML =
-        await fetch2(`http://0.0.0.0:${htmlServerPort}${path}`, {
+        await fetch2(`http://0.0.0.0:${htmlServerPort}${path}${url.search}`, {
           method: 'POST',
           body: JSON.stringify({
             global: {
@@ -59,7 +59,7 @@ const ServePage = function (options) {
     }
     else {
       const reactRootHTML =
-        await fetch2(`http://0.0.0.0:${htmlServerPort}${path}`, {
+        await fetch2(`http://0.0.0.0:${htmlServerPort}${path}${url.search}`, {
           method: 'POST',
         }).then(res => res.text())
 
