@@ -1,12 +1,9 @@
 import http from 'http'
 import ReadableText from './ReadableText.js'
 import getRootHtml from './getRootHtml.mjs'
-import { spawn } from 'child_process'
+import { execFile } from 'child_process'
 import cluster from 'cluster'
 import os from 'os'
-
-const env = process.env.NODE_ENV
-const nocache = process.env.NO_CACHE == '1' || process.env.NO_CACHE == 'true'
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -15,24 +12,25 @@ const server = http.createServer(async (request, response) => {
     const data = text ? JSON.parse(text) : {}
     const { global = {} } = data
 
-    const html =
-      nocache
-      ? await new Promise(resolve => {
-        let output = ''
-        const cmd = spawn('node', [`${import.meta.dirname}/logRootHtml.mjs`], {
-          stdio: ['pipe', 'pipe', process.stderr],
-          env: { ...process.env },
-        })
-        cmd.stdin.write(JSON.stringify({ global, url: request.url }))
-        cmd.stdin.end()
-        cmd.stdout.on('data', buf => {
-          output += buf.toString('utf8')
-        })
-        cmd.on('close', code => {
-          resolve(output)
-        })
+    const html = await new Promise(resolve => {
+      let output = ''
+      const cmd = execFile('node', [`${import.meta.dirname}/logRootHtml.mjs`], {
+        env: {
+          ...process.env,
+          global: JSON.stringify(global),
+          url: request.url,
+        },
       })
-      : await getRootHtml({ global, url: request.url })
+      cmd.stdin.write(JSON.stringify({ global, url: request.url }))
+      cmd.stdin.end()
+      cmd.stdout.on('data', buf => {
+        output += buf.toString('utf8')
+      })
+      cmd.stderr.pipe(process.stderr)
+      cmd.on('close', code => {
+        resolve(output)
+      })
+    })
 
     if (html == '') {
       throw new Error('bad html')

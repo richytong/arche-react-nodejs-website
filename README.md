@@ -96,7 +96,6 @@ The project configuration.
 `package.json` `env` variables:
   * `PORT` - the port that the main Node.js server will listen on.
   * `HTML_SERVER_PORT` - the port that the Node.js HTML server will listen on.
-  * `HTML_SERVER_NO_CACHE` - whether to bypass the import cache in the HTML server. Should be true for the local environment.
   * `BYPASS_PUBLIC_CACHE` - whether to bypass the public cache in main server. Should be true for the local environment.
 
 ## Run it locally

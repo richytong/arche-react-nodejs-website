@@ -11,7 +11,6 @@ const ServePage = require('./ServePage')
 const {
   PORT,
   HTML_SERVER_PORT,
-  HTML_SERVER_NO_CACHE,
   BYPASS_PUBLIC_CACHE,
 } = require('./package.json').env[process.env.NODE_ENV]
 
@@ -22,7 +21,6 @@ const run = async function (options) {
         ...process.env,
         NODE_ENV: process.env.NODE_ENV,
         PORT: HTML_SERVER_PORT,
-        NO_CACHE: HTML_SERVER_NO_CACHE,
       },
     })
     cmd.stdout.pipe(process.stdout)

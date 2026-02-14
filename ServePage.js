@@ -37,7 +37,8 @@ const ServePage = function (options) {
           method: 'POST',
           body: JSON.stringify({
             global: {
-              myGlobalVariable: 'example',
+              myGlobalVariable1: 'example1',
+              myGlobalVariable2: 'example2',
             },
           }),
         }).then(res => res.text())
@@ -46,7 +47,8 @@ const ServePage = function (options) {
         url: '/',
         reactRootHTML,
         global: {
-          myGlobalVariable: 'example',
+          myGlobalVariable1: 'example1',
+          myGlobalVariable2: 'example2',
         },
       })
 

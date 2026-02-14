@@ -6,8 +6,15 @@ const { pipe, set, get, filter, omit } = rubico
 
 globalThis.window = globalThis
 
-for (const name in process.env) {
-  window[name] = process.env[name]
+const urlObject = new URL(`http://*${process.env.url}`)
+window.location = {
+  pathname: urlObject.pathname,
+  search: urlObject.search,
+}
+
+const global = process.env.global ? JSON.parse(process.env.global) : {}
+for (const name in global) {
+  window[name] = global[name]
 }
 window.ssr = true
 
@@ -160,21 +167,6 @@ window.document = {
 await import('../public/global.js')
 const Root = await import('../public/react/Root.js').then(get('default'))
 
-export default function getRootHtml(data) {
-  const { url, global } = data
-  const urlObject = new URL(`http://*${url}`)
-  window.location = {
-    pathname: urlObject.pathname,
-    search: urlObject.search,
-  }
-  for (const name in global) {
-    window[name] = global[name]
-    globalThis[name] = global[name]
-  }
-  const html = Root()
-  for (const name in global) {
-    delete window[name]
-    delete globalThis[name]
-  }
-  return html
+export default function getRootHtml() {
+  return Root()
 }
