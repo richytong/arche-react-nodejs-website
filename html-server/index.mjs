@@ -68,6 +68,6 @@ if (cluster.isMaster) {
   })
 } else {
   server.listen(port, async () => {
-    console.log('Worker', process.pid, 'HTML Server listening on port', port)
+    console.log('Worker', process.pid, 'HTML server listening on port', port)
   })
 }

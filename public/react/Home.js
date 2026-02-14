@@ -1,8 +1,8 @@
 const Home = ReactElement(props => {
   return Div({ id: 'react-root' }, [
     H1('Home'),
-    P(myGlobalVariable1),
-    P(myGlobalVariable2),
+    P(MY_GLOBAL_VARIABLE_1),
+    P(MY_GLOBAL_VARIABLE_2),
   ])
 })
 
