@@ -1,9 +1,10 @@
 import http from 'http'
-import ReadableText from './ReadableText.js'
-import getRootHtml from './getRootHtml.mjs'
-import { execFile } from 'child_process'
 import cluster from 'cluster'
 import os from 'os'
+import { execFile } from 'child_process'
+import ReadableText from './ReadableText.js'
+import getRootHtml from './getRootHtml.mjs'
+import sleep from './sleep.mjs'
 
 const server = http.createServer(async (request, response) => {
   try {
@@ -62,7 +63,9 @@ if (cluster.isMaster) {
     cluster.fork()
   }
 
-  cluster.on('exit', (worker, code, signal) => {
+  cluster.on('exit', async (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died; waiting for cleanup...`)
+    await sleep(1000)
     console.log(`worker ${worker.process.pid} died; forking another worker`)
     cluster.fork()
   })
